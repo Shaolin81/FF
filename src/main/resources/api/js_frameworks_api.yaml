@@ -64,24 +64,24 @@ paths:
         '5XX':
           description: Unexpected error
   /js-frameworks/{name}/{version}:
+    parameters:
+      - name: name
+        in: path
+        schema:
+          $ref: "#/components/schemas/JsFrameworkName"
+        required: true
+        description: js framework name case insensitive
+      - name: version
+        in: path
+        schema:
+          $ref: '#/components/schemas/JsFrameworkVersion'
+        required: true
+        description: js framework version case insensitive
     get:
       tags:
         - js-frameworks
       summary: Get details by framework's name
       operationId: getJsFrameworkByNameAndVersion
-      parameters:
-        - name: name
-          in: path
-          schema:
-            $ref: "#/components/schemas/JsFrameworkName"
-          required: true
-          description: js framework name case insensitive
-        - name: version
-          in: path
-          schema:
-            $ref: '#/components/schemas/JsFrameworkVersion'
-          required: true
-          description: js framework version case insensitive
       responses:
         '200':
           description: Success
@@ -98,19 +98,6 @@ paths:
         - js-frameworks
       summary: Delete framework by name and version
       operationId: deleteJsFrameworkByNameAndVersion
-      parameters:
-        - name: name
-          in: path
-          schema:
-            $ref: "#/components/schemas/JsFrameworkName"
-          required: true
-          description: js framework name case insensitive
-        - name: version
-          in: path
-          schema:
-            $ref: '#/components/schemas/JsFrameworkVersion'
-          required: true
-          description: js framework version case insensitive
       responses:
         '204':
           description: Success
@@ -121,19 +108,6 @@ paths:
         - js-frameworks
       summary: Update framework by name.
       operationId: createOrUpdateJsFramework
-      parameters:
-        - name: name
-          in: path
-          schema:
-            $ref: "#/components/schemas/JsFrameworkName"
-          required: true
-          description: js framework name case insensitive
-        - name: version
-          in: path
-          schema:
-            $ref: '#/components/schemas/JsFrameworkVersion'
-          required: true
-          description: js framework version case insensitive
       requestBody:
         content:
           application/json:
