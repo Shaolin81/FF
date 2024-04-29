@@ -1,0 +1,210 @@
+openapi: 3.0.3
+info:
+  title: Javascript Frameworks API
+  description: |-
+    A simple API that offers basic CRUD operations with Javascript Framework object
+  version: 1.0-SNAPSHOT
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: js-frameworks
+    description: CRUD operations with with Javascript Framework object
+paths:
+  /js-frameworks:
+    get:
+      tags:
+        - js-frameworks
+      summary: Get list of JS frameworks
+      description: Get all JS frameworks or search by query parameters
+      operationId: getJsFrameworks
+      parameters:
+        - in: query
+          name: pageable
+          schema:
+            $ref: '#/components/schemas/Pageable'
+        - in: query
+          name: nameContains
+          schema:
+            $ref: "#/components/schemas/JsFrameworkName"
+          description: searches for the occurrence of the specified string anywhere in the searched property
+        - in: query
+          name: versionContains
+          schema:
+            $ref: '#/components/schemas/JsFrameworkVersion'
+          description: searches for the occurrence of the specified string anywhere in the searched property
+        - in: query
+          name: deprecationDateMin
+          schema:
+            $ref: "#/components/schemas/JsFrameworkDeprecationDate"
+          description: searches for js frameworks with deprecation date older or equal to a specified min deprecation date
+        - in: query
+          name: deprecationDateMax
+          schema:
+            $ref: "#/components/schemas/JsFrameworkDeprecationDate"
+          description: searches for js frameworks with deprecation date earlier or equal to a specified min deprecation date
+        - in: query
+          name: hypeLevelMin
+          schema:
+            $ref: "#/components/schemas/JsFrameworkHypeLevel"
+          description: searches for js frameworks with hype level higher or equal to a specified number
+        - in: query
+          name: hypeLevelMax
+          schema:
+            $ref: "#/components/schemas/JsFrameworkHypeLevel"
+          description: searches for js frameworks with hype level lower or equal to a specified number
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JsFrameworkViewDTO'
+        '5XX':
+          description: Unexpected error
+  /js-frameworks/{name}/{version}:
+    get:
+      tags:
+        - js-frameworks
+      summary: Get details by framework's name
+      operationId: getJsFrameworkByNameAndVersion
+      parameters:
+        - name: name
+          in: path
+          schema:
+            $ref: "#/components/schemas/JsFrameworkName"
+          required: true
+          description: js framework name case insensitive
+        - name: version
+          in: path
+          schema:
+            $ref: '#/components/schemas/JsFrameworkVersion'
+          required: true
+          description: js framework version case insensitive
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsFrameworkViewDTO'
+        '404':
+          description: Resource not found
+        '5XX':
+          description: Unexpected error
+    delete:
+      tags:
+        - js-frameworks
+      summary: Delete framework by name and version
+      operationId: deleteJsFrameworkByNameAndVersion
+      parameters:
+        - name: name
+          in: path
+          schema:
+            $ref: "#/components/schemas/JsFrameworkName"
+          required: true
+          description: js framework name case insensitive
+        - name: version
+          in: path
+          schema:
+            $ref: '#/components/schemas/JsFrameworkVersion'
+          required: true
+          description: js framework version case insensitive
+      responses:
+        '204':
+          description: Success
+        '5XX':
+          description: Unexpected error
+    put:
+      tags:
+        - js-frameworks
+      summary: Update framework by name.
+      operationId: createOrUpdateJsFramework
+      parameters:
+        - name: name
+          in: path
+          schema:
+            $ref: "#/components/schemas/JsFrameworkName"
+          required: true
+          description: js framework name case insensitive
+        - name: version
+          in: path
+          schema:
+            $ref: '#/components/schemas/JsFrameworkVersion'
+          required: true
+          description: js framework version case insensitive
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JsFrameworkCreateUpdateDTO'
+        required: true
+      responses:
+        '204':
+          description: Success
+        '404':
+          description: Resource not found
+        '4XX':
+          description: Bad Request
+        '5XX':
+          description: Unexpected error
+components:
+  schemas:
+    JsFrameworkViewDTO:
+      type: object
+      required:
+        - name
+        - version
+        - deprecationDate
+        - hypeLevel
+      properties:
+        name:
+          $ref: '#/components/schemas/JsFrameworkName'
+        version:
+          $ref: '#/components/schemas/JsFrameworkVersion'
+        deprecationDate:
+          $ref: "#/components/schemas/JsFrameworkDeprecationDate"
+        hypeLevel:
+          $ref: "#/components/schemas/JsFrameworkHypeLevel"
+    JsFrameworkCreateUpdateDTO:
+      type: object
+      required:
+        - deprecationDate
+        - hypeLevel
+      properties:
+        deprecationDate:
+          $ref: "#/components/schemas/JsFrameworkDeprecationDate"
+        hypeLevel:
+          $ref: "#/components/schemas/JsFrameworkHypeLevel"
+    JsFrameworkName:
+      type: string
+      description: name of javascript framework; only alphanumeric and (+,-,.,*) characters are allowed; case insensitive
+      pattern: '^[a-zA-Z0-9+-.*]*$'
+      maxLength: 50
+    JsFrameworkVersion:
+      type: string
+      description: version of javascript framework; only alphanumeric and (+,-,.,*) characters are allowed; case insensitive
+      pattern: '^[a-zA-Z0-9+-.*]*$'
+      maxLength: 50
+    JsFrameworkDeprecationDate:
+      type: string
+      format: date
+      description: the date when the framework will be/was marked as deprecated
+    JsFrameworkHypeLevel:
+      type: integer
+      description: current level of fanatical irrational admiration
+      minimum: 0
+      maximum: 10
+    Pageable:
+      description: Pageable query parameters
+      type: object
+      properties:
+        page:
+          type: integer
+          description: starts with 0 for the first page
+          default: 0
+        size:
+          type: integer
+          description: page's size
+          default: 20
