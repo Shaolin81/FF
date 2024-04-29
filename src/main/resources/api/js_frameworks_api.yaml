@@ -207,4 +207,5 @@ components:
         size:
           type: integer
           description: page's size
+          maximum: 200
           default: 20
