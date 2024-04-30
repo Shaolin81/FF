@@ -1,37 +1,5 @@
 # FF Homework
 
-### Zadani
-Dobrý den, Miloši,
-
-Zasíláme Vám domácí úkol, který bychom vás rádi nechali vypracovat.
-
-Jedná se o jednoduchou aplikaci, která běží na Springu a využívá REST rozhraní. Aplikace slouží k evidenci JavaScriptových frameworků. Jako Java programátoři víme, že jejich svět je trochu nepřehledný a nestálý.
-
-Vaším úkolem proto bude vytvořit jednoduchou CRUD aplikaci. Každý framework by měl mít minimálně následující vlastnosti: "version", "deprecationDate" a "hypeLevel". Tyto vlastnosti označují verzi frameworku, datum, kdy bude/byl framework označen za zastaralý, a aktuální úroveň fanatického iracionálního obdivu 🙂.
-
-Datové typy si volte dle svého uvážení. Myslete na to, že verzí frameworku může být více než jedna. Dále přidejte možnost vytvářet nové frameworky a upravovat ty stávající. Stejně tak přidejte možnost frameworky mazat. Nakonec přidejte možnost vyhledávat mezi frameworky. Veškeré nově přidané funkce pokryjte testy.
-
-Použijte jakékoliv technologie nebo knihovny, které si přejete. Myslete na to, že i když se jedná o jednoduchou aplikaci, měla by vypadat jako vzorová komplexní aplikace odpovídající úrovni seniorního vývojáře.
-
-Co k tomu budete potřebovat:
-
-Java
-
-Spring Boot
-
-Maven
-
-Další knihovny dle vlastního výběru
-
-A co dál?
-
-Aplikace by měla být spustitelná a měla by se dát ovládat například přes aplikaci Postman / Insomnia.
-
-Přejeme Vám hodně štěstí a těšíme se na výsledek.
-S pozdravem,
-
-Marcel
-
 ### Spusteni
 Neni treba zadna externi konfigurace, napr. databaze. Pro jednoduchost se pouziva bundled H2 databaze, ktera si pro perzistenci mezi spustenimi aplikace vytvori v aktualnim adresari slozku 'db' s databazovymi soubory. 
 
