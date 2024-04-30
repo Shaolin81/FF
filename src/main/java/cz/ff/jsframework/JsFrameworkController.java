@@ -62,10 +62,8 @@ public class JsFrameworkController implements JsFrameworksApi {
     @Override
     public ResponseEntity<Void> deleteJsFrameworkByNameAndVersion(String name, String version) {
         if (jsFrameworkService.delete(name, version)) {
-            LOG.info("JS Framework {} was successfully deleted.", name);
             return ResponseEntity.noContent().build();
         } else {
-            LOG.warn("Requested JS Framework {} to delete doesn't exist.", name);
             return ResponseEntity.notFound().build();
         }
     }
